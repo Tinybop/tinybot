@@ -8,7 +8,16 @@
 #   None
 #
 # Commands:
-#   fuck you
+#   hubot praise <person>
+#   <person>++
+#   hubot scold <person>
+#   <person>--
+#   hubot white pages
+#   <person> aka <nickname>
+#   i am known as <nickname>
+#   hubot what's my nickname
+#   hubot tell me about <person>
+#   tinybux for <person>
 #
 # Author:
 #   David Yee
