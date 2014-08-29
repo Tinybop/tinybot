@@ -7,6 +7,7 @@
 #   None
 #
 # Commands:
+# tinybot app status
 #
 # Author:
 #   Josh Stewart
@@ -19,11 +20,13 @@ module.exports = (robot) ->
       msg.send "Please specify your App Annie API key in APP_ANNIE_KEY"
       return
 
+    apiKey = process.env.APP_ANNIE_KEY
+
     msg.send "Checking now ..."
 
     # Get apps sales
     robot.http("https://api.appannie.com/v1/accounts/157063/sales?break_down=application+date&start_date=2014-08-27&end_date=2014-08-28")
-    .header('Authorization', 'Bearer #{process.env.APP_ANNIE_KEY}')
+    .header('Authorization', 'Bearer #{apiKey}')
     # Add API key to heroku
     .get() (err, res, body) ->
       if err
