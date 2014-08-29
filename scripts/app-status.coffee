@@ -20,9 +20,9 @@ module.exports = (robot) ->
       msg.send "Please specify your App Annie API key in APP_ANNIE_KEY"
       return
 
-    apiKey = process.env.APP_ANNIE_KEY
-
     msg.send "Checking now ..."
+    msg.send process.env.APP_ANNIE_KEY
+    msg.send "process.env.APP_ANNIE_KEY: #{process.env.APP_ANNIE_KEY}"
 
     # Get apps sales
     robot.http("https://api.appannie.com/v1/accounts/157063/sales?break_down=application+date&start_date=2014-08-27&end_date=2014-08-28")
