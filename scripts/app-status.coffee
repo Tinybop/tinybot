@@ -22,7 +22,7 @@ module.exports = (robot) ->
 
     msg.send "Checking now ..."
 
-    bearer = 'Bearer #{process.env.APP_ANNIE_KEY}'
+    bearer = 'Bearer '+process.env.APP_ANNIE_KEY
     msg.send process.env.APP_ANNIE_KEY
     msg.send "bearer: #{bearer}"
 
