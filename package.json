@@ -21,10 +21,10 @@
     "url": "https://github.com/github/hubot.git"
   },
   "dependencies": {
-    "hubot": ">= 2.6.0 < 3.0.0",
-    "hubot-scripts": ">= 2.5.0 < 3.0.0",
-    "hubot-hipchat": "^2.6.4",
     "htmlparser": "^1.7.7",
+    "hubot": "^2.8.0",
+    "hubot-hipchat": "^2.6.4",
+    "hubot-scripts": ">= 2.5.0 < 3.0.0",
     "soupselect": "^0.2.0",
     "underscore": "^1.6.0",
     "underscore.string": "^2.3.3"
