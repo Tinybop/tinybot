@@ -23,8 +23,6 @@ module.exports = (robot) ->
     msg.send "Checking now ..."
 
     bearer = 'Bearer '+process.env.APP_ANNIE_KEY
-    msg.send process.env.APP_ANNIE_KEY
-    msg.send "bearer: #{bearer}"
 
     # Get apps sales
     robot.http("https://api.appannie.com/v1/accounts/157063/sales?break_down=application+date&start_date=2014-08-27&end_date=2014-08-28")
@@ -33,8 +31,8 @@ module.exports = (robot) ->
       if err
         msg.send "Error: #{err}"
         return
-      if body
-        msg.send "Body: #{body}"
+      # if body
+      #   msg.send "Body: #{body}"
       data = null
       try
         data = JSON.parse(body)
@@ -54,14 +52,10 @@ module.exports = (robot) ->
           if match is hit then true else false
 
       salesList = data['sales_list']
-      msg.send "salesList: #{salesList}"
 
       for item in salesList
         itemId = item['app']
-        msg.send "itemId: #{itemId}"
-
         found = stats.apps.where id:itemId
-
         if found.length == 0
           newObject = {}
           newObject.id = itemId
@@ -74,7 +68,7 @@ module.exports = (robot) ->
 
           stats.apps.push newObject
 
-      output = "#{stats.date}\n============================="
+      output = "/code #{stats.date}\n============================="
 
       for app in stats.apps
         output += """
