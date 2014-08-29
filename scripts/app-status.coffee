@@ -21,13 +21,14 @@ module.exports = (robot) ->
       return
 
     msg.send "Checking now ..."
+
+    bearer = 'Bearer #{process.env.APP_ANNIE_KEY}'
     msg.send process.env.APP_ANNIE_KEY
-    msg.send "process.env.APP_ANNIE_KEY: #{process.env.APP_ANNIE_KEY}"
+    msg.send "bearer: #{bearer}"
 
     # Get apps sales
     robot.http("https://api.appannie.com/v1/accounts/157063/sales?break_down=application+date&start_date=2014-08-27&end_date=2014-08-28")
-    .header('Authorization', 'Bearer #{apiKey}')
-    # Add API key to heroku
+    .header('Authorization', bearer)
     .get() (err, res, body) ->
       if err
         msg.send "Error: #{err}"
