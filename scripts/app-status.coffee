@@ -16,16 +16,33 @@
 
 module.exports = (robot) ->
   robot.respond /app status/i, (msg) ->
-    unless process.env.APP_ANNIE_KEY?
-      msg.send "Please specify your App Annie API key in APP_ANNIE_KEY"
-      return
+    # unless process.env.APP_ANNIE_KEY?
+    #   msg.send "Please specify your App Annie API key in APP_ANNIE_KEY"
+    #   return
 
     msg.send "Checking now ..."
 
-    bearer = 'Bearer '+process.env.APP_ANNIE_KEY
+    # bearer = 'Bearer '+process.env.APP_ANNIE_KEY
+    bearer = 'Bearer 3539b6983455bff0617d6d447b6d4b2fbf6ca3f2'
+
+    Date::yyyymmdd = ->
+      yyyy = @getFullYear().toString()
+      mm = (@getMonth() + 1).toString()
+      dd = @getDate().toString()
+      yyyy + '-' + ((if mm[1] then mm else "0" + mm[0])) + '-' + ((if dd[1] then dd else "0" + dd[0]))
+
+    today = new Date()
+
+    yesterday = new Date()
+    yesterday.setDate(yesterday.getDate() - 1)
+
+    daybefore = new Date()
+    daybefore.setDate(daybefore.getDate() - 2)
+
+    console.log('yesterday: ' + yesterday.yyyymmdd() + '& daybefore: '+daybefore.yyyymmdd())
 
     # Get apps sales
-    robot.http("https://api.appannie.com/v1/accounts/157063/sales?break_down=application+date&start_date=2014-08-27&end_date=2014-08-28")
+    robot.http("https://api.appannie.com/v1/accounts/157063/sales?break_down=application+date&start_date=#{daybefore.yyyymmdd()}&end_date=#{yesterday.yyyymmdd()}")
     .header('Authorization', bearer)
     .get() (err, res, body) ->
       if err
