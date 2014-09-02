@@ -38,9 +38,7 @@ module.exports = (robot) ->
 
     daybefore = new Date()
     daybefore.setDate(daybefore.getDate() - 2)
-
-    console.log('yesterday: ' + yesterday.yyyymmdd() + '& daybefore: '+daybefore.yyyymmdd())
-
+    
     # Get apps sales
     robot.http("https://api.appannie.com/v1/accounts/157063/sales?break_down=application+date&start_date=#{daybefore.yyyymmdd()}&end_date=#{yesterday.yyyymmdd()}")
     .header('Authorization', bearer)
