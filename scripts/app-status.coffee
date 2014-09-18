@@ -16,14 +16,14 @@
 
 module.exports = (robot) ->
   robot.respond /app status/i, (msg) ->
-    # unless process.env.APP_ANNIE_KEY?
-    #   msg.send "Please specify your App Annie API key in APP_ANNIE_KEY"
-    #   return
+
+    unless process.env.APP_ANNIE_KEY?
+      msg.send "Please specify your App Annie API key in APP_ANNIE_KEY"
+      return
 
     msg.send "Checking now ..."
 
-    # bearer = 'Bearer '+process.env.APP_ANNIE_KEY
-    bearer = 'Bearer 3539b6983455bff0617d6d447b6d4b2fbf6ca3f2'
+    bearer = 'Bearer '+process.env.APP_ANNIE_KEY
 
     Date::yyyymmdd = ->
       yyyy = @getFullYear().toString()
@@ -38,7 +38,7 @@ module.exports = (robot) ->
 
     daybefore = new Date()
     daybefore.setDate(daybefore.getDate() - 2)
-    
+
     # Get apps sales
     robot.http("https://api.appannie.com/v1/accounts/157063/sales?break_down=application+date&start_date=#{daybefore.yyyymmdd()}&end_date=#{yesterday.yyyymmdd()}")
     .header('Authorization', bearer)
