@@ -92,7 +92,7 @@ module.exports = (robot) ->
             # TODO: save app data in brain for later
             callback null, appData
       (appData, callback) ->
-        output = []
+        output = ['/code ']
         date = new Date(appData.app_list[0].last_sales_date + 'T00:00:00-05:00')
         options =
           weekday: 'long'
