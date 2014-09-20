@@ -20,10 +20,7 @@ async = require 'async'
 module.exports = (robot) ->
 
   key = process.env.APP_ANNIE_KEY
-  key = '3539b6983455bff0617d6d447b6d4b2fbf6ca3f2'
-  bearer = 'Bearer '+key
-
-  console.log 'key:' + key + ', bearer:' + bearer
+  bearer = 'Bearer ' + key
 
   getJSON = (params) ->
     promise = new rsvp.Promise((resolve, reject) ->
@@ -36,91 +33,78 @@ module.exports = (robot) ->
     promise
 
   getParams = (app) ->
-    console.log 'setting up params for ' + app.app_name
     id = app.app_id
     end =  app.last_sales_date
     start = new Date(end + 'T00:00:00-05:00')
     start.setDate(start.getDate() - 1)
     start = start.yyyymmdd()
-    return 'apps/' + id + '/sales?break_down=date+iap&start_date=' + start + '&end_date=' + end
+    'apps/' + id + '/sales?break_down=date+iap&start_date=' + start + '&end_date=' + end
 
   calcChange = (now, start) ->
     diff = +now - +start
-    if diff > 0
-      diff = '+' + diff
-    return now + ' (' + diff + ')'
+    diff = '+' + diff  if diff > 0
+    now + ' (' + diff + ')'
 
-  getSales = (app) ->
-    async.waterfall [
-      (callback) ->
-        params = getParams(app)
-        getJSON(params).then((salesData) ->
-          callback null, app, salesData
-        )
-      (app, salesData, callback) ->
-        app.sales = salesData
-        console.log 'sales for ' + app.app_name + '=' + app.sales.sales_list.length
-        callback null, app
-    ], (err, result) ->
-      result
-
+  # TODO: clean up date formatter
   Date::yyyymmdd = ->
     yyyy = @getFullYear().toString()
     mm = (@getMonth() + 1).toString()
     dd = @getDate().toString()
-    yyyy + "-" + ((if mm[1] then mm else "0" + mm[0])) + "-" + ((if dd[1] then dd else "0" + dd[0]))
+    yyyy + '-' + ((if mm[1] then mm else '0' + mm[0])) + '-' + ((if dd[1] then dd else '0' + dd[0]))
 
-  # robot.respond /app status/i, (msg) ->
-  robot.hear /a/i, (msg) ->
-    console.log 'heard'
+  # TODO: move get app data function out here
+
+  # TODO: if robot.brain.get('appData')
+    # test if it is fresh
+  # else
+    # get data
+
+  # TODO: add robot brain clearing command
+
+  robot.respond /app status/i, (msg) ->
 
     unless key?
-      msg.send "Please specify your App Annie API key in APP_ANNIE_KEY"
+      msg.send 'Please specify your App Annie API key in APP_ANNIE_KEY'
       return
-    msg.send "Checking now…"
+    msg.send 'Checking now…'
 
     async.waterfall [
-
       (callback) ->
         # Get the Account Connection App List
         # http://support.appannie.com/entries/23215137-2-Account-Connection-App-List
         getJSON('apps').then((appData) ->
-          console.log 'appData recieved'
-          return callback null, appData
+          callback null, appData
         )
       (appData, callback) ->
         # Get App Sales data for each app in the app_list and attach it to app
         # http://support.appannie.com/entries/23215097-3-App-Sales
         async.each appData.app_list, ((app, callback) ->
-          console.log "Processing app " + app.app_name
           params = getParams(app)
-          getJSON(params).then((salesData) ->
+          getJSON(params).then (salesData) ->
             app.sales = salesData
             callback()
-            return app
-          )
-          return app
+            app
+          app
         ), (err) ->
           if err
-            console.log "An app failed to process"
+            msg.send 'An app failed to process'
           else
-            console.log "All apps have been processed successfully"
-            return callback null, appData
+            # TODO: save app data in brain for later
+            callback null, appData
       (appData, callback) ->
         output = []
-
         date = new Date(appData.app_list[0].last_sales_date + 'T00:00:00-05:00')
-        options = {
-          weekday: 'long',
-          year: 'numeric',
-          month: 'long',
+        options =
+          weekday: 'long'
+          year: 'numeric'
+          month: 'long'
           day: 'numeric'
-        }
-        output.push date.toLocaleDateString('en-US', options)
 
+        output.push date.toLocaleDateString('en-US', options)
         for app in appData.app_list
           output.push '============================='
           output.push ' '
+          app.app_name = 'Tinybop Explorers 1 & 2' if app.app_name is 'n/a' and app.app_id is '917509967'
           output.push app.app_name
           output.push '    Sales: ' + calcChange(
             app.sales.sales_list[0].units.app.downloads,
@@ -130,15 +114,14 @@ module.exports = (robot) ->
             app.sales.sales_list[0].units.app.updates,
             app.sales.sales_list[1].units.app.updates
           )
-          if app.sales.sales_list[0].units.iap and app.sales.sales_list[0].units.iap.sales > 0
+          if app.sales.iap_sales.length > 0
             output.push '      IAP: ' + calcChange(
-              app.sales.sales_list[0].units.iap.updates,
-              app.sales.sales_list[1].units.iap.updates
+              app.sales.sales_list[0].units.iap.sales,
+              app.sales.sales_list[1].units.iap.sales
             )
           output.push ' '
-
-        output = output.reduce (x, y) -> x + '\n' + y
-
+        output = output.reduce (x, y) ->
+          x + '\n' + y
         callback null, output
     ], (err, result) ->
       msg.send(result)
