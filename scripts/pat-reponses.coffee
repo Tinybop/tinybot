@@ -8,7 +8,11 @@
 #   None
 #
 # Commands:
-#   fuck you
+#   hubot thanks
+#   <user>++
+#   <user>--
+#   bux <user>
+# 
 #
 # Author:
 #   David Yee

@@ -8,8 +8,8 @@
 #   None
 #
 # Commands:
-#   hubot I feel sexy
-#   hubot How is David
+#   hubot I feel <text>
+#   hubot How is <user>?
 #
 # Author:
 #   David Yee
@@ -27,7 +27,7 @@ module.exports = (robot) ->
       console.log("shoulda been a contender")
     else if feeler == 'i'
       feeler = msg.message.user
-    else if feeler == 'robot' || feeler == 'otterbot'
+    else if feeler == 'robot' || feeler == 'tinybot'
       msg.reply "Just like a robot should."
     else
       users = robot.brain.usersForFuzzyName(feeler)

@@ -9,7 +9,8 @@
 #   None
 #
 # Commands:
-#   hubot bukkit (.*)
+#   bukkit
+#   bukkit <query>
 #
 # Author:
 #   David Yee (@tangentialism)

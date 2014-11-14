@@ -8,7 +8,7 @@
 #   None
 #
 # Commands:
-#   hubot aw yiss <text> - motha fuckin <text>
+#   hubot aw yiss <text>
 #
 # Author:
 #   sschneid
@@ -22,4 +22,3 @@ module.exports = (robot) ->
       .post(data) (err,res,body) ->
         body = JSON.parse(body)
         msg.send body.link
-        
