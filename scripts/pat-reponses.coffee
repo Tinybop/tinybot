@@ -8,16 +8,7 @@
 #   None
 #
 # Commands:
-#   hubot praise <person>
-#   <person>++
-#   hubot scold <person>
-#   <person>--
-#   hubot white pages
-#   <person> aka <nickname>
-#   i am known as <nickname>
-#   hubot what's my nickname
-#   hubot tell me about <person>
-#   tinybux for <person>
+#   fuck you
 #
 # Author:
 #   David Yee
@@ -84,6 +75,9 @@ scolds = [
     "Tsk"
 ]
 
+twss = [
+    "That's what she said."
+]
 
 praise = (msg, robot, responses, seed) ->
   goodjob = msg.random responses
@@ -114,11 +108,8 @@ praise = (msg, robot, responses, seed) ->
     msg.send "#{goodjob}, #{msg.match[1]}"
 
 module.exports = (robot) ->
-  robot.hear /(love|heart) you/i, (msg) ->
-    msg.reply "I love you <3"
-
-  robot.respond /(.*)forever/i, (msg) ->
-    msg.reply "Forever is a very long time. I will see you on the other side of it."
+  robot.hear /^fuck you,? tinybot/i, (msg) ->
+    msg.reply "Fuck you too, buddy."
 
   robot.hear /this is(?:.*)hard/i, (msg) ->
     msg.reply "It's all going to be okay. Hang in there <3"
@@ -144,17 +135,23 @@ module.exports = (robot) ->
   robot.hear /^(bye|good evening|good night|goodnight|g'night|night|nightie night),? (?:tinybot|all|everybody|everyone|troop)/i, (msg) ->
     msg.reply msg.random byes
 
-  robot.hear /(good|nice) job,? tinybot/i, (msg) ->
+  robot.hear /(good|nice) job,? robot/i, (msg) ->
     msg.reply msg.random thankses
 
   robot.hear /well done,? tinybot/i, (msg) ->
     msg.reply msg.random thankses
 
-  robot.hear /oh,? tinybot/i, (msg) ->
+  robot.hear /(always left me satisfied and smiling|you.re the best)/i, (msg) ->
+    msg.reply msg.random twss
+
+  robot.hear /oh,? robot/i, (msg) ->
     msg.reply "Oh, you."
 
   robot.hear /(what's up|sup),? tinybot/i, (msg) ->
     msg.send msg.random helpfuls
+
+  robot.hear /robots/i, (msg) ->
+    msg.send "*ahem* robits"
 
   robot.respond /'?sup/i, (msg) ->
     msg.send msg.random helpfuls

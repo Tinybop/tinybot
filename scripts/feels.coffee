@@ -8,7 +8,8 @@
 #   None
 #
 # Commands:
-#   I feel <feel>
+#   hubot I feel sexy
+#   hubot How is David
 #
 # Author:
 #   David Yee

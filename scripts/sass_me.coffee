@@ -29,7 +29,7 @@ module.exports = (robot) ->
  / \\
 
 (•_•)
-<) )╯   #{sassy_phrase[2] || ""} 
+<) )╯   #{sassy_phrase[2] || ""}
  / \\
 ```
 """

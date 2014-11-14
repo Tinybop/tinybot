@@ -9,8 +9,7 @@
 #   None
 #
 # Commands:
-#   bukkit
-#   bukkit <query>
+#   hubot bukkit (.*)
 #
 # Author:
 #   David Yee (@tangentialism)
@@ -41,7 +40,7 @@ module.exports = (robot) ->
       return bukkit_bucket
 
   bukkits_that_look_like = (word, source_bukkit) ->
-    reggie = new RegExp(word, "i");
+    reggie = new RegExp(word, "i")
 
     if source_bukkit
       return bukkits().filter (x) -> x[0].match(reggie) && x[1] == source_bukkit
