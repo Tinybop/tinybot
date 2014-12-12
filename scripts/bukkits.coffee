@@ -11,6 +11,7 @@
 # Commands:
 #   bukkit
 #   bukkit <query>
+#   hubot reload bukkits
 #
 # Author:
 #   David Yee (@tangentialism)

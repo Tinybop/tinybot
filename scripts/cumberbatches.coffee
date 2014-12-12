@@ -8,7 +8,6 @@
 #   None
 #
 # Commands:
-#   benedict
 #
 # Author:
 #   David Yee
@@ -33,20 +32,20 @@ benedicts = [
     "BALACLAVA",
     "BALTHAZAR",
     "BALACLAVA",
-    "BARCALOUNGER"
-    "BARNDOOR"
-    "BENELUX"
-    "BEERBELLY"
-    "BEECHNUT"
-    "BEANCOUNTER"
-    "BRANDYWITCH"
-    "BANDICOOT"
-    "BATTLESHIP"
-    "BUTTERSCOTCH"
+    "BARCALOUNGER",
+    "BARNDOOR",
+    "BENELUX",
+    "BEERBELLY",
+    "BEECHNUT",
+    "BEANCOUNTER",
+    "BRANDYWITCH",
+    "BANDICOOT",
+    "BATTLESHIP",
+    "BUTTERSCOTCH",
     "BLUNDERBUSS",
     "BUMBLEBEE"
   ]
-  
+
 cumberbatches = [
     "CARBUNCLE",
     "COREPOWER",
@@ -76,7 +75,7 @@ cumberbatches = [
     "CLOISTERFARM",
     "CABBAGEPATCH"
   ]
-  
+
 module.exports = (robot) ->
   robot.hear /benedict cumberbatch/i, (msg) ->
     benedict = msg.random benedicts

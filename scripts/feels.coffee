@@ -8,8 +8,7 @@
 #   None
 #
 # Commands:
-#   hubot I feel <text>
-#   hubot How is <user>?
+#   hubot how does everybody feel?
 #
 # Author:
 #   David Yee
