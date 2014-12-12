@@ -12,7 +12,7 @@
 #   <user>++
 #   <user>--
 #   bux <user>
-# 
+#
 #
 # Author:
 #   David Yee
@@ -154,8 +154,8 @@ module.exports = (robot) ->
   robot.hear /(what's up|sup),? tinybot/i, (msg) ->
     msg.send msg.random helpfuls
 
-  robot.hear /robots/i, (msg) ->
-    msg.send "*ahem* robits"
+#  robot.hear /robots/i, (msg) ->
+#    msg.send "*ahem* robits"
 
   robot.respond /'?sup/i, (msg) ->
     msg.send msg.random helpfuls
